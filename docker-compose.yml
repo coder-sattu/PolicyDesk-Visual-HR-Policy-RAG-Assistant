@@ -1,0 +1,19 @@
+services:
+  hr-rag:
+    build: .
+    container_name: hr-policy-rag
+    env_file: backend/.env
+    environment:
+      ENVIRONMENT: production
+      CORS_ORIGINS: http://localhost:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      # persist index + uploads
+      - rag_index:/app/backend/data/vector_store
+      - rag_uploads:/app/backend/data/uploads
+    restart: unless-stopped
+
+volumes:
+  rag_index:
+  rag_uploads:
